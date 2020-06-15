@@ -10,6 +10,7 @@ import UIKit
 
 class BaseNavigationController: UINavigationController {
     
+    // Life cycle
     init(root viewController: UIViewController) {
         super.init(rootViewController: viewController)
         modalPresentationStyle = .fullScreen

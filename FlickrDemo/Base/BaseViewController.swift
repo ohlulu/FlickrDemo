@@ -12,14 +12,7 @@ class BaseViewController: UIViewController {
 
     var bag = DisposeBag()
     
-    // MARK: UI element
-    
-    // MARK: Private property
-    
-    private var canPopViewController = true
-
-    // MARK: - Life cycle
-
+    // Life cycle
     init() {
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .fullScreen
