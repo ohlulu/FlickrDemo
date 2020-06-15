@@ -9,7 +9,11 @@
 import Foundation
 import Alamofire
 
+let Client = HTTPClient.default
+
 public struct HTTPClient {
+    
+    static let `default` = HTTPClient()
     
     private let session: Alamofire.Session
     

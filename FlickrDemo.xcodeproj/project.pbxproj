@@ -28,6 +28,13 @@
 		50065C142497B145001DF16F /* DoneDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BFF2497B145001DF16F /* DoneDecision.swift */; };
 		50065C152497B145001DF16F /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C012497B145001DF16F /* NetworkRequest.swift */; };
 		50065C162497B145001DF16F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C022497B145001DF16F /* NetworkError.swift */; };
+		50065C182497B557001DF16F /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C172497B557001DF16F /* APIConfig.swift */; };
+		50065C1B2497B60C001DF16F /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C1A2497B60C001DF16F /* SearchRequest.swift */; };
+		50065C1F2497B8AE001DF16F /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C1E2497B8AE001DF16F /* ResultViewModel.swift */; };
+		50065C212497B8B9001DF16F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C202497B8B9001DF16F /* ResultViewController.swift */; };
+		50065C232497BFA0001DF16F /* ResultViewController+Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C222497BFA0001DF16F /* ResultViewController+Cell.swift */; };
+		50065C262497C84A001DF16F /* LoadNextable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C252497C84A001DF16F /* LoadNextable.swift */; };
+		50065C292497D409001DF16F /* ResultCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C282497D409001DF16F /* ResultCellModel.swift */; };
 		5060795C2497A2390005BB14 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060795B2497A2390005BB14 /* BaseViewController.swift */; };
 		5060795E2497A2B10005BB14 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060795D2497A2B10005BB14 /* BaseNavigationController.swift */; };
 		506079602497A6CE0005BB14 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060795F2497A6CE0005BB14 /* BaseViewModel.swift */; };
@@ -79,6 +86,13 @@
 		50065BFF2497B145001DF16F /* DoneDecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoneDecision.swift; sourceTree = "<group>"; };
 		50065C012497B145001DF16F /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		50065C022497B145001DF16F /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		50065C172497B557001DF16F /* APIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
+		50065C1A2497B60C001DF16F /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
+		50065C1E2497B8AE001DF16F /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
+		50065C202497B8B9001DF16F /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		50065C222497BFA0001DF16F /* ResultViewController+Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultViewController+Cell.swift"; sourceTree = "<group>"; };
+		50065C252497C84A001DF16F /* LoadNextable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNextable.swift; sourceTree = "<group>"; };
+		50065C282497D409001DF16F /* ResultCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCellModel.swift; sourceTree = "<group>"; };
 		5060795B2497A2390005BB14 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5060795D2497A2B10005BB14 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		5060795F2497A6CE0005BB14 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
@@ -140,17 +154,18 @@
 		50065BE92497B145001DF16F /* APIService */ = {
 			isa = PBXGroup;
 			children = (
+				50065C172497B557001DF16F /* APIConfig.swift */,
 				50065BEA2497B145001DF16F /* Cancelable.swift */,
 				50065BF42497B145001DF16F /* NetworkTypealias.swift */,
 				50065BF52497B145001DF16F /* HTTPMethod.swift */,
 				50065BF62497B145001DF16F /* HTTPClient.swift */,
+				50065C012497B145001DF16F /* NetworkRequest.swift */,
+				50065C022497B145001DF16F /* NetworkError.swift */,
 				50065BEB2497B145001DF16F /* Plugin */,
 				50065BED2497B145001DF16F /* Adapter */,
 				50065BF72497B145001DF16F /* Task */,
 				50065BFA2497B145001DF16F /* Decision */,
 				50065C002497B145001DF16F /* Error */,
-				50065C012497B145001DF16F /* NetworkRequest.swift */,
-				50065C022497B145001DF16F /* NetworkError.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -204,6 +219,30 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		50065C192497B5EF001DF16F /* HTTPRequests */ = {
+			isa = PBXGroup;
+			children = (
+				50065C1A2497B60C001DF16F /* SearchRequest.swift */,
+			);
+			path = HTTPRequests;
+			sourceTree = "<group>";
+		};
+		50065C242497C817001DF16F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				50065C252497C84A001DF16F /* LoadNextable.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		50065C272497D3F6001DF16F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				50065C282497D409001DF16F /* ResultCellModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		506079592497A0FC0005BB14 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +275,7 @@
 		506079662497A92A0005BB14 /* Featured */ = {
 			isa = PBXGroup;
 			children = (
+				50065C272497D3F6001DF16F /* Model */,
 				506079672497A9330005BB14 /* View */,
 				5060796A2497A9850005BB14 /* ViewModel */,
 			);
@@ -246,6 +286,8 @@
 			isa = PBXGroup;
 			children = (
 				506079642497A9270005BB14 /* FeaturedViewController.swift */,
+				50065C202497B8B9001DF16F /* ResultViewController.swift */,
+				50065C222497BFA0001DF16F /* ResultViewController+Cell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -254,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				5060796B2497A9940005BB14 /* FeaturedViewModel.swift */,
+				50065C1E2497B8AE001DF16F /* ResultViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -285,8 +328,10 @@
 				50840C5824979F5E008BFAAA /* Info.plist */,
 				506079592497A0FC0005BB14 /* Resource */,
 				50065BE92497B145001DF16F /* APIService */,
+				50065C192497B5EF001DF16F /* HTTPRequests */,
 				5060795A2497A10E0005BB14 /* Base */,
 				506079612497A72F0005BB14 /* Main */,
+				50065C242497C817001DF16F /* Helper */,
 				50065BE62497ABC9001DF16F /* Extensions */,
 			);
 			path = FlickrDemo;
@@ -478,7 +523,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				50065C0C2497B145001DF16F /* HTTPMethod.swift in Sources */,
+				50065C232497BFA0001DF16F /* ResultViewController+Cell.swift in Sources */,
 				50065C162497B145001DF16F /* NetworkError.swift in Sources */,
+				50065C212497B8B9001DF16F /* ResultViewController.swift in Sources */,
 				50065BE82497ABD8001DF16F /* UIKitExtensions.swift in Sources */,
 				50065C0B2497B145001DF16F /* NetworkTypealias.swift in Sources */,
 				50065C042497B145001DF16F /* HTTPPlugin.swift in Sources */,
@@ -491,17 +538,22 @@
 				50065C092497B145001DF16F /* AnyAdapter.swift in Sources */,
 				50065C0E2497B145001DF16F /* MultipartFormData.swift in Sources */,
 				506079602497A6CE0005BB14 /* BaseViewModel.swift in Sources */,
+				50065C182497B557001DF16F /* APIConfig.swift in Sources */,
 				50065C052497B145001DF16F /* MethodAdapter.swift in Sources */,
+				50065C1B2497B60C001DF16F /* SearchRequest.swift in Sources */,
 				50065C152497B145001DF16F /* NetworkRequest.swift in Sources */,
 				50065C032497B145001DF16F /* Cancelable.swift in Sources */,
 				5060795C2497A2390005BB14 /* BaseViewController.swift in Sources */,
+				50065C262497C84A001DF16F /* LoadNextable.swift in Sources */,
 				50065C132497B145001DF16F /* NetworkDecision.swift in Sources */,
+				50065C292497D409001DF16F /* ResultCellModel.swift in Sources */,
 				50065C112497B145001DF16F /* StatusCodeDecision.swift in Sources */,
 				50065C122497B145001DF16F /* DecodeDecision.swift in Sources */,
 				50065C062497B145001DF16F /* JSONAdapter.swift in Sources */,
 				50065C072497B145001DF16F /* HeaderAdapter.swift in Sources */,
 				506079632497A7440005BB14 /* TabbarViewController.swift in Sources */,
 				506079652497A9270005BB14 /* FeaturedViewController.swift in Sources */,
+				50065C1F2497B8AE001DF16F /* ResultViewModel.swift in Sources */,
 				5060795E2497A2B10005BB14 /* BaseNavigationController.swift in Sources */,
 				50065C142497B145001DF16F /* DoneDecision.swift in Sources */,
 				5060796C2497A9940005BB14 /* FeaturedViewModel.swift in Sources */,

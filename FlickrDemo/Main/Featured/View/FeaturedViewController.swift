@@ -96,6 +96,25 @@ private extension FeaturedViewController {
                 guard let self = self else { return }
                 self.viewModel.perPageTextDidChange(text)
             }).disposed(by: bag)
+        
+        searchButton.rx.tap
+            .flatMap { [weak self] _  in
+                return (self?.viewModel.didTapSearchButton(
+                    text: self?.contentTextField.text,
+                    perPage: self?.perPageTextField.text) ?? .never())
+            }
+            .subscribe(onNext: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let model):
+                    let vm = ResultViewModel(text: model.0, perPage: model.1)
+                    let vc = ResultViewController(viewModel: vm)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                case .failure(let error) :
+                    self.showAlert(title: "Oops!", message: error.localizedDescription, handler: nil)
+                }
+                
+            }).disposed(by: bag)
     }
 }
 

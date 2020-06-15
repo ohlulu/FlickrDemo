@@ -9,18 +9,33 @@
 import Foundation
 
 final class FeaturedViewModel: BaseViewModel {
+    
+    enum Error: Swift.Error, LocalizedError {
+        case perPageIsNotInt
+        case someImpossible
+        
+        var errorDescription: String? {
+            switch self {
+            case .perPageIsNotInt: return "per page is not Integer, maybe you pasted it."
+            case .someImpossible: return "impossible error"
+            }
+        }
+        
+    }
 
     // Stream
-    private let buttonEnableRelay = BehaviorRelay<Bool>(value: false)
-    private let contentTextRelay = BehaviorRelay<String>(value: "")
-    private let perPageRelay = BehaviorRelay<String>(value: "")
+    private let contentTextRelay = PublishRelay<String>()
+    private let perPageRelay = PublishRelay<String>()
     
     // Property
     var buttonEnable: Driver<Bool> {
         Observable.combineLatest(contentTextRelay.asObservable(), perPageRelay.asObservable())
             .map { !$0.0.isEmpty && !$0.0.isEmpty }
             .asDriver(onErrorJustReturn: false)
+            .startWith(false)
     }
+    
+    private var request = SearchRequest()
 
     // life cycle
     override init() {
@@ -42,6 +57,26 @@ extension FeaturedViewModel {
     
     func perPageTextDidChange(_ text: String) {
         perPageRelay.accept(text)
+    }
+    
+    func didTapSearchButton(text: String?, perPage: String?) -> Observable<Result<(String, String), Error>> {
+        return .create { observer in
+            
+            let end: () -> Disposable = { Disposables.create() }
+            
+            guard let text = text, let perPage = perPage else {
+                observer.onNext(.failure(Error.someImpossible))
+                return end()
+            }
+            
+            if Int(perPage) == nil {
+                observer.onNext(.failure(Error.perPageIsNotInt))
+                return end()
+            }
+            observer.onNext(.success((text, perPage)))
+            return end()
+        }
+        
     }
 }
 

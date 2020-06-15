@@ -44,7 +44,7 @@ public extension NetworkRequest {
     // setup default value
     var tag: String { "Tag not set." }
     
-    var baseURL: URL { URL(string: "https://postman-echo.com")! }
+    var baseURL: URL { URL(string: "https://api.flickr.com/services/rest/")! }
     
     // 可以改成專案中常用的
     var method: HTTPMethod { .get }
