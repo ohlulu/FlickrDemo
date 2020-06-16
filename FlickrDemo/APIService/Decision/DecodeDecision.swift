@@ -16,7 +16,7 @@ public struct DecodeDecision: NetworkDecision {
         self.decoder = decoder
     }
 
-    public func shouldApply<Req: HTTPRequest>(
+    public func shouldApply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
@@ -25,7 +25,7 @@ public struct DecodeDecision: NetworkDecision {
         true
     }
     
-    public func apply<Req: HTTPRequest>(
+    public func apply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,

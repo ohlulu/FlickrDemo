@@ -22,7 +22,7 @@ public struct HTTPClient {
     }
     
     @discardableResult
-    func send<Req: HTTPRequest>(
+    func send<Req: NetworkRequest>(
         _ request: Req,
         decisions: [NetworkDecision]? = nil,
         plugins: [HTTPPlugin] = [],
@@ -30,89 +30,77 @@ public struct HTTPClient {
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) -> CancelToken {
         
-        switch request.task {
-        case .normal:
-            return sendNormalRequest(request, decisions: decisions, plugins: plugins, handler: handler)
-        case .upload(let multipartColumns):
-            return sendUploadRequest(request, multiparColumns: multipartColumns, progress: progress, handler: handler)
+        var decisions = decisions ?? request.decisions
+        if !decisions.isEmpty {
+            if var first = decisions[0] as? LogDecision {
+                first.startTime = Date()
+                decisions.removeFirst()
+                decisions.insert(first, at: 0)
+            }
         }
         
+        let responseHandler = { (afResponse: AFDataResponse<Data>) in
+            
+            guard let httpResponse = afResponse.response else {
+                handler(.failure(NetworkError.Response.nilResponse))
+                return
+            }
+            
+            switch afResponse.result {
+            case .success(let data):
+                self.handleDecision(
+                    request: request,
+                    data: data,
+                    response: httpResponse,
+                    decisions: decisions,
+                    plugins: plugins,
+                    handler: handler
+                )
+            case .failure(let error):
+                handler(.failure(NetworkError.AF.error(error)))
+            }
+        }
         
+        switch request.task {
+        case .normal:
+            return sendNormalRequest(request, responseHandler: responseHandler)
+        case .upload(let multipartColumns):
+            do {
+                return try sendUploadRequest(request, multiparColumns: multipartColumns, progress: progress, responseHandler: responseHandler)
+            } catch {
+                handler(.failure(error))
+            }
+        }
+        
+        return CancelToken()
     }
 
-    private func sendNormalRequest<Req: HTTPRequest>(
+    private func sendNormalRequest<Req: NetworkRequest>(
         _ request: Req,
-        decisions: [NetworkDecision]? = nil,
-        plugins: [HTTPPlugin] = [],
-        handler: @escaping (Result<Req.Response, Error>) -> Void
+        responseHandler: @escaping (AFDataResponse<Data>) -> Void
     ) -> CancelToken {
         let request = session.request(request)
-            .responseData(completionHandler: { (afResponse: AFDataResponse<Data>) in
-                
-                guard let httpResponse = afResponse.response else {
-                    handler(.failure(NetworkError.Response.nilResponse))
-                    return
-                }
-                
-                switch afResponse.result {
-                case .success(let data):
-                    self.handleDecision(
-                        request: request,
-                        data: data,
-                        response: httpResponse,
-                        decisions: decisions ?? request.decisions,
-                        plugins: plugins,
-                        handler: handler
-                    )
-                case .failure(let error):
-                    handler(.failure(NetworkError.AF.error(error)))
-                }
-            })
+            .responseData(completionHandler: responseHandler)
         return CancelToken(request: request)
     }
     
-    private func sendUploadRequest<Req: HTTPRequest>(
+    private func sendUploadRequest<Req: NetworkRequest>(
         _ request: Req,
         multiparColumns: [MultipartColumn],
-        decisions: [NetworkDecision]? = nil,
-        plugins: [HTTPPlugin] = [],
         progress: @escaping ((Progress) -> Void),
-        handler: @escaping (Result<Req.Response, Error>) -> Void
-    ) -> CancelToken {
+        responseHandler: @escaping (AFDataResponse<Data>) -> Void
+    ) throws -> CancelToken {
         
         let multipartFormData = MultipartFormData()
-        do {
-            try multipartFormData.adapted(columns: multiparColumns)
-        } catch {
-            handler(.failure(error))
-        }
+        try multipartFormData.adapted(columns: multiparColumns)
         
         let uploadRequest = session.upload(multipartFormData: multipartFormData, with: request)
             .uploadProgress(closure: progress)
-            .responseData(completionHandler: { (afResponse: AFDataResponse<Data>) in
-                guard let httpResponse = afResponse.response else {
-                    handler(.failure(NetworkError.Response.nilResponse))
-                    return
-                }
-                
-                switch afResponse.result {
-                case .success(let data):
-                    self.handleDecision(
-                        request: request,
-                        data: data,
-                        response: httpResponse,
-                        decisions: decisions ?? request.decisions,
-                        plugins: plugins,
-                        handler: handler
-                    )
-                case .failure(let error):
-                    handler(.failure(NetworkError.AF.error(error)))
-                }
-            })
+            .responseData(completionHandler: responseHandler)
         return CancelToken(request: uploadRequest)
     }
     
-    private func handleDecision<Req: HTTPRequest>(
+    private func handleDecision<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,
@@ -121,14 +109,18 @@ public struct HTTPClient {
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) {
         
-        print(decisions)
         if decisions.isEmpty {
             handler(.failure(NetworkError.Decision.decisionsIsEmpty))
             return
         }
         
         var decisions = decisions
-        let currentDecision = decisions.removeFirst()
+        var currentDecision = decisions.removeFirst()
+        
+        if var _currentDecision = currentDecision as? LogDecision {
+            _currentDecision.endTime = Date()
+            currentDecision = _currentDecision
+        }
         
         if !currentDecision.shouldApply(request: request, data: data, response: response) {
             handleDecision(request: request, data: data, response: response, decisions: decisions, plugins: plugins, handler: handler)

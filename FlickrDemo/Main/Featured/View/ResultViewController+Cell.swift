@@ -10,7 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol ResultCellModelProtocol {
-    var url: URL? { get }
+    var imageURL: URL? { get }
+    var title: String { get }
     var isFavorit: Bool { get }
 }
 
@@ -30,6 +31,10 @@ extension ResultViewController {
             imageView.clipsToBounds = true
             return imageView
         }()
+        
+        private lazy
+        var titleLabel = UILabel()
+        
         // Life cycle
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -47,7 +52,8 @@ extension ResultViewController {
 extension ResultViewController.Cell {
     
     func configCell(_ model: ResultCellModelProtocol) {
-        imageView.kf.setImage(with: model.url, options: [.transition(.fade(0.2))])
+        imageView.kf.setImage(with: model.imageURL, options: [.transition(.fade(0.2))])
+        titleLabel.text = model.title
     }
 }
 
@@ -57,11 +63,17 @@ private extension ResultViewController.Cell {
     
     func setupUI() {
         
-        contentView.backgroundColor = .lightGray
-        
         contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+        imageView.snp.makeConstraints { make in
+            make.leading.top.trailing.equalToSuperview()
+        }
+        
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(4)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(20)
         }
     }
 }

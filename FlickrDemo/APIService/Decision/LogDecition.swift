@@ -15,7 +15,7 @@ public struct LogDecision: NetworkDecision {
     
     fileprivate static let formatter = DateFormatter()
     
-    public func shouldApply<Req: HTTPRequest>(
+    public func shouldApply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
@@ -24,7 +24,7 @@ public struct LogDecision: NetworkDecision {
         true
     }
     
-    public func apply<Req: HTTPRequest>(
+    public func apply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,
@@ -41,7 +41,7 @@ public struct LogDecision: NetworkDecision {
         let log = """
         ----------------------------------------------------------------------
         \(request.tag)
-        path -> \(request.urlRequest?.url?.absoluteString ?? "nil")
+        URL -> \(request.urlRequest?.url?.absoluteString ?? "nil")
         request time -> \(startTime?.toString() ?? "nil")
         cost time -> \(String(format: "%.3f", costTime)) s
         headers -> \(request.urlRequest?.allHTTPHeaderFields ?? [:])

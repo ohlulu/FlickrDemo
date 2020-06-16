@@ -16,7 +16,6 @@
 		50065C082497B145001DF16F /* QueryItemAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF12497B145001DF16F /* QueryItemAdapter.swift */; };
 		50065C092497B145001DF16F /* AnyAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF22497B145001DF16F /* AnyAdapter.swift */; };
 		50065C0A2497B145001DF16F /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF32497B145001DF16F /* RequestAdapter.swift */; };
-		50065C0B2497B145001DF16F /* NetworkTypealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF42497B145001DF16F /* NetworkTypealias.swift */; };
 		50065C0C2497B145001DF16F /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF52497B145001DF16F /* HTTPMethod.swift */; };
 		50065C0D2497B145001DF16F /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF62497B145001DF16F /* HTTPClient.swift */; };
 		50065C0E2497B145001DF16F /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065BF82497B145001DF16F /* MultipartFormData.swift */; };
@@ -74,7 +73,6 @@
 		50065BF12497B145001DF16F /* QueryItemAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryItemAdapter.swift; sourceTree = "<group>"; };
 		50065BF22497B145001DF16F /* AnyAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyAdapter.swift; sourceTree = "<group>"; };
 		50065BF32497B145001DF16F /* RequestAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
-		50065BF42497B145001DF16F /* NetworkTypealias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTypealias.swift; sourceTree = "<group>"; };
 		50065BF52497B145001DF16F /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		50065BF62497B145001DF16F /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		50065BF82497B145001DF16F /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 			children = (
 				50065C172497B557001DF16F /* APIConfig.swift */,
 				50065BEA2497B145001DF16F /* Cancelable.swift */,
-				50065BF42497B145001DF16F /* NetworkTypealias.swift */,
 				50065BF52497B145001DF16F /* HTTPMethod.swift */,
 				50065BF62497B145001DF16F /* HTTPClient.swift */,
 				50065C012497B145001DF16F /* NetworkRequest.swift */,
@@ -527,7 +524,6 @@
 				50065C162497B145001DF16F /* NetworkError.swift in Sources */,
 				50065C212497B8B9001DF16F /* ResultViewController.swift in Sources */,
 				50065BE82497ABD8001DF16F /* UIKitExtensions.swift in Sources */,
-				50065C0B2497B145001DF16F /* NetworkTypealias.swift in Sources */,
 				50065C042497B145001DF16F /* HTTPPlugin.swift in Sources */,
 				50065C0F2497B145001DF16F /* Task.swift in Sources */,
 				50065C0A2497B145001DF16F /* RequestAdapter.swift in Sources */,

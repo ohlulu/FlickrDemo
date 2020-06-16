@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum DecisionAction<Req: HTTPRequest> {
+public enum DecisionAction<Req: NetworkRequest> {
     case next(Req, Data, HTTPURLResponse)
     case restart([NetworkDecision])
     case errored(Error)
@@ -18,14 +18,14 @@ public enum DecisionAction<Req: HTTPRequest> {
 
 public protocol NetworkDecision {
     
-    func shouldApply<Req: HTTPRequest>(
+    func shouldApply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
     ) -> Bool
     
     
-    func apply<Req: HTTPRequest>(
+    func apply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,

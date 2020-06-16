@@ -26,7 +26,7 @@ public protocol NetworkRequest: URLRequestConvertible {
     
     var headers: [String: String]? { get }
     
-    /// 仿 Moya 封裝 upload/download request
+    /// 仿 Moya 封裝 upload/download... request
     var task: Task { get }
     
     /// request adapter

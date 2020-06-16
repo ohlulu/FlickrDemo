@@ -10,7 +10,7 @@ import Foundation
 
 public struct StatusCodeDecision: NetworkDecision {
 
-    public func shouldApply<Req: HTTPRequest>(
+    public func shouldApply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
@@ -19,7 +19,7 @@ public struct StatusCodeDecision: NetworkDecision {
         !(200..<300).contains(response.statusCode)
     }
     
-    public func apply<Req: HTTPRequest>(
+    public func apply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,

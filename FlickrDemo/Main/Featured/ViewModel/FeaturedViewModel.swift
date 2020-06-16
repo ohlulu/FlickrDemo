@@ -30,7 +30,7 @@ final class FeaturedViewModel: BaseViewModel {
     // Property
     var buttonEnable: Driver<Bool> {
         Observable.combineLatest(contentTextRelay.asObservable(), perPageRelay.asObservable())
-            .map { !$0.0.isEmpty && !$0.0.isEmpty }
+            .map { !$0.0.isEmpty && !$0.1.isEmpty }
             .asDriver(onErrorJustReturn: false)
             .startWith(false)
     }

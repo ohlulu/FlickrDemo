@@ -33,7 +33,7 @@ final class ResultViewController: BaseViewController {
         flowLayout.minimumInteritemSpacing = layoutConst.minimumInteritemSpacing
         flowLayout.minimumLineSpacing = layoutConst.minimumLineSpacing
         let width = (UIScreen.main.bounds.width - layoutConst.spacing) / 2
-        flowLayout.itemSize = .init(width: width, height: width)
+        flowLayout.itemSize = .init(width: width, height: width + 24)
         return flowLayout
     }()
     private lazy

@@ -10,7 +10,7 @@ import Foundation
 
 public struct DoneDecision: NetworkDecision {
 
-    public func shouldApply<Req: HTTPRequest>(
+    public func shouldApply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
@@ -19,7 +19,7 @@ public struct DoneDecision: NetworkDecision {
         true
     }
     
-    public func apply<Req: HTTPRequest>(
+    public func apply<Req: NetworkRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,

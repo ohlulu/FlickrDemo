@@ -10,9 +10,11 @@ import Foundation
 
 struct SearchRequest: NetworkRequest {
     
+    var tag: String { "👉 flickr.photos.search"}
     var text = ""
     var perPage = ""
     var index = ""
+    
     private var parameters: [String: String] {
         [
             "method": "flickr.photos.search",
@@ -26,8 +28,7 @@ struct SearchRequest: NetworkRequest {
     }
     
     var adapters: [RequestAdapter] {
-        print(parameters)
-        return defaultAdapters + [
+        defaultAdapters + [
             QueryItemAdapter(parameters: parameters)
         ]
     }
@@ -50,7 +51,7 @@ struct SearchResponse: Codable {
             let isfamily: Int
             let ispublic: Int
             
-            var url: URL? { URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_m.jpg") }
+            var imageURL: URL? { URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_m.jpg") }
         }
         let photo: [Photo]
     }
