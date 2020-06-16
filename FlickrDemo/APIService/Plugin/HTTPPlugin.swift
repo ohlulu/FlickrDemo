@@ -11,11 +11,12 @@ import Foundation
 public protocol HTTPPlugin {
     
     typealias ResultType = (Data?, URLResponse?, Error?)
-    func willSend<Req: NetworkRequest>(_ request: Req, urlRequest: URLRequest)
+    
+    func willSend<Req: NetworkRequest>(_ request: Req)
     func didReceive<Req: NetworkRequest>(_ request: Req, result: ResultType)
 }
 
 public extension HTTPPlugin {
-    func willSend<Req: NetworkRequest>(_ request: Req, urlRequest: URLRequest) { }
+    func willSend<Req: NetworkRequest>(_ request: Req) { }
     func didReceive<Req: NetworkRequest>(_ request: Req, result: ResultType) { }
 }

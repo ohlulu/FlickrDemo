@@ -10,6 +10,5 @@ import Foundation
 
 struct APIConfig {
     static let key = "ef857da5cfe550bca96f0561cf58d8e9"
-    static let imageSize
 }
 

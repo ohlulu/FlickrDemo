@@ -32,6 +32,8 @@ public protocol NetworkRequest: URLRequestConvertible {
     /// request adapter
     var adapters: [RequestAdapter] { get }
     
+    var plugins: [HTTPPlugin] { get }
+    
     /// response decision
     var decisions: [NetworkDecision] { get }
     
@@ -79,6 +81,14 @@ public extension NetworkRequest {
             StatusCodeDecision(),
             DecodeDecision(),
             DoneDecision()
+        ]
+    }
+    
+    var plugins: [HTTPPlugin] { defaultPlugins }
+    
+    var defaultPlugins: [HTTPPlugin] {
+        [
+            ActivityIndicatorPlugin()
         ]
     }
     

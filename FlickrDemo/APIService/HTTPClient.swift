@@ -25,7 +25,7 @@ public struct HTTPClient {
     func send<Req: NetworkRequest>(
         _ request: Req,
         decisions: [NetworkDecision]? = nil,
-        plugins: [HTTPPlugin] = [],
+        plugins: [HTTPPlugin]? = nil,
         progress: @escaping ((Progress) -> Void) = { _ in },
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) -> CancelToken {
@@ -39,7 +39,13 @@ public struct HTTPClient {
             }
         }
         
+        let plugins = plugins ?? request.plugins
+        
+        plugins.forEach { $0.willSend(request) }
+        
         let responseHandler = { (afResponse: AFDataResponse<Data>) in
+            
+            plugins.forEach { $0.didReceive(request, result: (afResponse.data, afResponse.response, afResponse.error)) }
             
             guard let httpResponse = afResponse.response else {
                 handler(.failure(NetworkError.Response.nilResponse))

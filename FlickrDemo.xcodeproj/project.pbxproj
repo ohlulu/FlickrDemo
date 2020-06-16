@@ -34,6 +34,7 @@
 		50065C232497BFA0001DF16F /* ResultViewController+Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C222497BFA0001DF16F /* ResultViewController+Cell.swift */; };
 		50065C262497C84A001DF16F /* LoadNextable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C252497C84A001DF16F /* LoadNextable.swift */; };
 		50065C292497D409001DF16F /* ResultCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50065C282497D409001DF16F /* ResultCellModel.swift */; };
+		5057A68D24987B3B00D7F843 /* ActivityIndicatorPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5057A68C24987B3B00D7F843 /* ActivityIndicatorPlugin.swift */; };
 		5060795C2497A2390005BB14 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060795B2497A2390005BB14 /* BaseViewController.swift */; };
 		5060795E2497A2B10005BB14 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060795D2497A2B10005BB14 /* BaseNavigationController.swift */; };
 		506079602497A6CE0005BB14 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060795F2497A6CE0005BB14 /* BaseViewModel.swift */; };
@@ -91,6 +92,7 @@
 		50065C222497BFA0001DF16F /* ResultViewController+Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultViewController+Cell.swift"; sourceTree = "<group>"; };
 		50065C252497C84A001DF16F /* LoadNextable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNextable.swift; sourceTree = "<group>"; };
 		50065C282497D409001DF16F /* ResultCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCellModel.swift; sourceTree = "<group>"; };
+		5057A68C24987B3B00D7F843 /* ActivityIndicatorPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorPlugin.swift; sourceTree = "<group>"; };
 		5060795B2497A2390005BB14 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5060795D2497A2B10005BB14 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		5060795F2497A6CE0005BB14 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				50065BEC2497B145001DF16F /* HTTPPlugin.swift */,
+				5057A68C24987B3B00D7F843 /* ActivityIndicatorPlugin.swift */,
 			);
 			path = Plugin;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				50065C0F2497B145001DF16F /* Task.swift in Sources */,
 				50065C0A2497B145001DF16F /* RequestAdapter.swift in Sources */,
 				50840C4B24979F5B008BFAAA /* AppDelegate.swift in Sources */,
+				5057A68D24987B3B00D7F843 /* ActivityIndicatorPlugin.swift in Sources */,
 				50065C102497B145001DF16F /* LogDecition.swift in Sources */,
 				50065C0D2497B145001DF16F /* HTTPClient.swift in Sources */,
 				50065C082497B145001DF16F /* QueryItemAdapter.swift in Sources */,
