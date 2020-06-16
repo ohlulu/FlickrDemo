@@ -14,4 +14,6 @@ public enum Task {
     case normal
     
     case upload([MultipartColumn])
+    
+    case download(DownloadDestination)
 }

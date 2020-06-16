@@ -12,14 +12,21 @@ struct ActivityIndicatorPlugin: HTTPPlugin {
     
     static private let indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
-        indicator.transform = .init(scaleX: 2, y: 2)
+        indicator.style = .gray
+        indicator.layer.shadowColor = UIColor.black.cgColor
+        indicator.layer.shadowRadius = 4
+        indicator.layer.shadowOffset = .init(width: 2, height: 2)
+        indicator.layer.shadowOpacity = 0.6
+        indicator.backgroundColor = .white
         let bounds = UIScreen.main.bounds
         indicator.center = .init(x: bounds.midX, y: bounds.midY)
         return indicator
     }()
     
     func willSend<Req: NetworkRequest>(_ request: Req) {
-        UIApplication.keyWindow?.addSubview(ActivityIndicatorPlugin.indicator)
+        let keyWindow = UIApplication.keyWindow
+        keyWindow?.addSubview(ActivityIndicatorPlugin.indicator)
+        keyWindow?.bringSubviewToFront(ActivityIndicatorPlugin.indicator)
         ActivityIndicatorPlugin.indicator.startAnimating()
     }
     

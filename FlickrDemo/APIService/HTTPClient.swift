@@ -30,12 +30,12 @@ public struct HTTPClient {
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) -> CancelToken {
         
-        var decisions = decisions ?? request.decisions
-        if !decisions.isEmpty {
-            if var first = decisions[0] as? LogDecision {
+        var _decisions = decisions ?? request.decisions
+        if !_decisions.isEmpty {
+            if var first = _decisions[0] as? LogDecision {
                 first.startTime = Date()
-                decisions.removeFirst()
-                decisions.insert(first, at: 0)
+                _decisions.removeFirst()
+                _decisions.insert(first, at: 0)
             }
         }
         
@@ -43,58 +43,67 @@ public struct HTTPClient {
         
         plugins.forEach { $0.willSend(request) }
         
-        let responseHandler = { (afResponse: AFDataResponse<Data>) in
+        let completion: RequestableCompletion = { response, urlRequest, data, error in
             
-            plugins.forEach { $0.didReceive(request, result: (afResponse.data, afResponse.response, afResponse.error)) }
+            plugins.forEach { $0.didReceive(request, result: (data, response, error)) }
             
-            guard let httpResponse = afResponse.response else {
+            if let error = error {
+                handler(.failure(error))
+                return
+            }
+            
+            guard let httpResponse = response else {
                 handler(.failure(NetworkError.Response.nilResponse))
                 return
             }
             
-            switch afResponse.result {
-            case .success(let data):
-                self.handleDecision(
-                    request: request,
-                    data: data,
-                    response: httpResponse,
-                    decisions: decisions,
-                    plugins: plugins,
-                    handler: handler
-                )
-            case .failure(let error):
-                handler(.failure(NetworkError.AF.error(error)))
+            guard let data = data else {
+                handler(.failure(NetworkError.Response.nilData))
+                return
             }
+            
+            self.handleDecision(
+                request: request,
+                data: data,
+                response: httpResponse,
+                decisions: _decisions,
+                plugins: plugins,
+                handler: handler
+            )
         }
         
         switch request.task {
         case .normal:
-            return sendNormalRequest(request, responseHandler: responseHandler)
+            return sendNormalRequest(request, completionHandler: completion)
         case .upload(let multipartColumns):
             do {
-                return try sendUploadRequest(request, multiparColumns: multipartColumns, progress: progress, responseHandler: responseHandler)
+                return try sendUploadRequest(request, multiparColumns: multipartColumns, progress: progress, completionHandler: completion)
             } catch {
                 handler(.failure(error))
             }
+        case .download(let destination):
+            return sendDownloadRequest(request, destination: destination, progress: progress, completionHandler: completion)
         }
         
         return CancelToken()
     }
 
+    /// DataRequest
     private func sendNormalRequest<Req: NetworkRequest>(
         _ request: Req,
-        responseHandler: @escaping (AFDataResponse<Data>) -> Void
+        completionHandler: @escaping RequestableCompletion
     ) -> CancelToken {
         let request = session.request(request)
-            .responseData(completionHandler: responseHandler)
+            .response(completionHandler: completionHandler)
         return CancelToken(request: request)
     }
     
+    /// UploadRequest
     private func sendUploadRequest<Req: NetworkRequest>(
         _ request: Req,
         multiparColumns: [MultipartColumn],
         progress: @escaping ((Progress) -> Void),
-        responseHandler: @escaping (AFDataResponse<Data>) -> Void
+        completionHandler: @escaping RequestableCompletion
     ) throws -> CancelToken {
         
         let multipartFormData = MultipartFormData()
@@ -102,8 +111,24 @@ public struct HTTPClient {
         
         let uploadRequest = session.upload(multipartFormData: multipartFormData, with: request)
             .uploadProgress(closure: progress)
-            .responseData(completionHandler: responseHandler)
+            .response(completionHandler: completionHandler)
         return CancelToken(request: uploadRequest)
+    }
+    
+    
+    /// DoenloadRequest
+    private func sendDownloadRequest<Req: NetworkRequest>(
+        _ request: Req,
+        destination: DownloadDestination?,
+        progress: @escaping ((Progress) -> Void),
+        completionHandler: @escaping RequestableCompletion
+    ) -> CancelToken {
+        
+        let downloadRequest = session.download(request, to: destination)
+            .downloadProgress(closure: progress)
+            .response(completionHandler: completionHandler)
+    
+        return CancelToken(request: downloadRequest)
     }
     
     private func handleDecision<Req: NetworkRequest>(
@@ -150,5 +175,4 @@ public struct HTTPClient {
             }
         }
     }
-
 }

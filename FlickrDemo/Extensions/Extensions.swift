@@ -1,5 +1,5 @@
 //
-//  UIKitExtensions.swift
+//  Extensions.swift
 //  FlickrDemo
 //
 //  Created by Ohlulu on 2020/6/15.
@@ -19,5 +19,16 @@ extension UIImage {
 
 extension UIApplication {
     static var keyWindow: UIWindow? { UIApplication.shared.windows.filter { $0.isKeyWindow }.first }
+}
+
+
+extension Date {
+    
+    func toString(format: String = "yyyyMMddHHmmss") -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.timeZone = .current
+        return formatter.string(from: self)
+    }
 }
 

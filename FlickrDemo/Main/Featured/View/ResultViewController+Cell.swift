@@ -10,13 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol ResultCellModelProtocol {
-    var imageURL: URL? { get }
     var title: String { get }
-    var isFavorit: Bool { get }
-}
-
-extension ResultCellModelProtocol {
-    var isFavorit: Bool { false }
+    var imageURL: URL? { get }
 }
 
 extension ResultViewController {
@@ -35,6 +30,9 @@ extension ResultViewController {
         private lazy
         var titleLabel = UILabel()
         
+        // Property
+        private var task: DownloadTask?
+        
         // Life cycle
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -44,6 +42,11 @@ extension ResultViewController {
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
+        
+        override func prepareForReuse() {
+            super.prepareForReuse()
+            task?.cancel()
+        }
     }
 }
 
@@ -52,7 +55,7 @@ extension ResultViewController {
 extension ResultViewController.Cell {
     
     func configCell(_ model: ResultCellModelProtocol) {
-        imageView.kf.setImage(with: model.imageURL, options: [.transition(.fade(0.2))])
+        task = imageView.kf.setImage(with: model.imageURL, options: [.transition(.fade(0.2))])
         titleLabel.text = model.title
     }
 }

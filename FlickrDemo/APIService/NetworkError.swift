@@ -22,10 +22,6 @@ enum NetworkError: Error {
         case decode(Error)
     }
     
-    enum AF: Error {
-        case error(AFError)
-    }
-    
     enum Decision: Error {
         case decisionsIsEmpty
         case somethingErrorAtDecodeDecision

@@ -9,5 +9,5 @@
 import Foundation
 
 extension SearchResponse.Photos.Photo: ResultCellModelProtocol {
-    
+
 }

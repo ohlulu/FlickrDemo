@@ -106,6 +106,10 @@ extension ResultViewController: UICollectionViewDelegate {
             viewModel.loadNext()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItem(at: indexPath)
+    }
 }
 
 // MARK: - UICollectionViewDataSource

@@ -51,7 +51,14 @@ struct SearchResponse: Codable {
             let isfamily: Int
             let ispublic: Int
             
-            var imageURL: URL? { URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_m.jpg") }
+            enum Size: String {
+                case small = "m"
+                case origin = "o"
+            }
+            
+            var imageURL: URL? {
+                URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg")
+            }
         }
         let photo: [Photo]
     }

@@ -25,6 +25,7 @@ public struct DoneDecision: NetworkDecision {
         response: HTTPURLResponse,
         action: @escaping (DecisionAction<Req>) -> Void
     ) {
+        
         guard let model = request.responseModel else {
             action(.errored(NetworkError.Decision.somethingErrorAtDecodeDecision))
             return

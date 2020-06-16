@@ -64,6 +64,25 @@ extension ResultViewModel: LoadNextable {
 
 extension ResultViewModel {
     
+    func didSelectItem(at indexPath: IndexPath) {
+        
+        let data = dataSource[indexPath.row]
+        
+        guard let url = data.imageURL else {
+            failureRelay.accept("url id nil.")
+            return
+        }
+        
+        let request = DownloadImageRequest(url: url, title: data.title)
+        Client.send(request) { result in
+            switch result {
+            case .success(let model):
+                break
+            case .failure(let error):
+                break
+            }
+        }
+    }
 }
 
 // MARK: - Output
