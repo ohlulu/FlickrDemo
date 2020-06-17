@@ -1,5 +1,5 @@
 //
-//  NetworkRequest.swift
+//  HTTPRequest.swift
 //  NetworkDemo
 //
 //  Created by Ohlulu on 2020/6/3.
@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 // 封裝請求
-public protocol NetworkRequest: URLRequestConvertible {
+public protocol HTTPRequest: URLRequestConvertible {
     
     /// 宣告 generic for response model
     associatedtype Response: Decodable
@@ -35,13 +35,13 @@ public protocol NetworkRequest: URLRequestConvertible {
     var plugins: [HTTPPlugin] { get }
     
     /// response decision
-    var decisions: [NetworkDecision] { get }
+    var decisions: [HTTPDecision] { get }
     
     /// 定義回傳的 Model
     var responseModel: Response? { get set }
 }
 
-public extension NetworkRequest {
+public extension HTTPRequest {
     
     // setup default value
     var tag: String { "Tag not set." }
@@ -73,9 +73,9 @@ public extension NetworkRequest {
     }
     
     // 預設用 defaultDecisions
-    var decisions: [NetworkDecision] { defaultDecisions }
+    var decisions: [HTTPDecision] { defaultDecisions }
     
-    var defaultDecisions: [NetworkDecision] {
+    var defaultDecisions: [HTTPDecision] {
         [
             StatusCodeDecision(),
             DecodeDecision(),
@@ -97,12 +97,12 @@ public extension NetworkRequest {
     }
 }
 
-extension NetworkRequest {
+extension HTTPRequest {
     
     var url: URL { baseURL.appendingPathComponent(path) }
 }
 
-extension NetworkRequest {
+extension HTTPRequest {
     
     public func asURLRequest() throws -> URLRequest {
         

@@ -8,7 +8,7 @@
 
 import Foundation
 
-//struct GetRequestToken: NetworkRequest {
+//struct GetRequestToken: HTTPRequest {
 //
 //    var adapters: [RequestAdapter]
 //}

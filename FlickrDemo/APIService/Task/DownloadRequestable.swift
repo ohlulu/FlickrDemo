@@ -14,7 +14,7 @@ struct BaseDownloadResponseModel: Decodable {
     let fileURL: URL
 }
 
-protocol DownloadRequestable: NetworkRequest {
+protocol DownloadRequestable: HTTPRequest {
 
     var destination: DownloadDestination { get }
 }

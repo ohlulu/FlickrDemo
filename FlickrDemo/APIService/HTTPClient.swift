@@ -22,9 +22,9 @@ public struct HTTPClient {
     }
     
     @discardableResult
-    func send<Req: NetworkRequest>(
+    func send<Req: HTTPRequest>(
         _ request: Req,
-        decisions: [NetworkDecision]? = nil,
+        decisions: [HTTPDecision]? = nil,
         plugins: [HTTPPlugin]? = nil,
         progress: @escaping ((Progress) -> Void) = { _ in },
         handler: @escaping (Result<Req.Response, Error>) -> Void
@@ -44,12 +44,12 @@ public struct HTTPClient {
             }
             
             guard let httpResponse = response else {
-                handler(.failure(NetworkError.Response.nilResponse))
+                handler(.failure(HTTPError.Response.nilResponse))
                 return
             }
             
             guard let data = data else {
-                handler(.failure(NetworkError.Response.nilData))
+                handler(.failure(HTTPError.Response.nilData))
                 return
             }
             
@@ -80,7 +80,7 @@ public struct HTTPClient {
     }
 
     /// DataRequest
-    private func sendNormalRequest<Req: NetworkRequest>(
+    private func sendNormalRequest<Req: HTTPRequest>(
         _ request: Req,
         completionHandler: @escaping RequestableCompletion
     ) -> CancelToken {
@@ -90,7 +90,7 @@ public struct HTTPClient {
     }
     
     /// UploadRequest
-    private func sendUploadRequest<Req: NetworkRequest>(
+    private func sendUploadRequest<Req: HTTPRequest>(
         _ request: Req,
         multiparColumns: [MultipartColumn],
         progress: @escaping ((Progress) -> Void),
@@ -108,7 +108,7 @@ public struct HTTPClient {
     
     
     /// DoenloadRequest
-    private func sendDownloadRequest<Req: NetworkRequest>(
+    private func sendDownloadRequest<Req: HTTPRequest>(
         _ request: Req,
         destination: DownloadDestination?,
         progress: @escaping ((Progress) -> Void),
@@ -122,17 +122,17 @@ public struct HTTPClient {
         return CancelToken(request: downloadRequest)
     }
     
-    private func handleDecision<Req: NetworkRequest>(
+    private func handleDecision<Req: HTTPRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,
-        decisions: [NetworkDecision],
+        decisions: [HTTPDecision],
         plugins: [HTTPPlugin],
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) {
         
         if decisions.isEmpty {
-            handler(.failure(NetworkError.Decision.decisionsIsEmpty))
+            handler(.failure(HTTPError.Decision.decisionsIsEmpty))
             return
         }
         

@@ -15,11 +15,11 @@ class LoggerPlugin: HTTPPlugin {
     
     fileprivate static let formatter = DateFormatter()
     
-    func willSend<Req>(_ request: Req) where Req : NetworkRequest {
+    func willSend<Req>(_ request: Req) where Req : HTTPRequest {
         startTime = Date()
     }
     
-    func didReceive<Req>(_ request: Req, result: LoggerPlugin.ResultType) where Req : NetworkRequest {
+    func didReceive<Req>(_ request: Req, result: LoggerPlugin.ResultType) where Req : HTTPRequest {
         endTime = Date()
         
         let costTime: TimeInterval

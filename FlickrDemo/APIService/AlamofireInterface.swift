@@ -32,6 +32,8 @@ extension DataRequest: Requestable {
 extension DownloadRequest: Requestable {
     internal func response(completionHandler: @escaping RequestableCompletion) -> Self {
         response { handler  in
+            
+            // TODO: not good
             guard let path = handler.fileURL?.path, let data = "{\"fileURL\": \"\(path)\"}".data(using: .utf8) else {
                 completionHandler(handler.response, handler.request, nil, handler.error)
                 return

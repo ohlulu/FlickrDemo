@@ -19,14 +19,14 @@ final class ActivityIndicatorPlugin: HTTPPlugin {
         return indicator
     }()
     
-    func willSend<Req: NetworkRequest>(_ request: Req) {
+    func willSend<Req: HTTPRequest>(_ request: Req) {
         let keyWindow = UIApplication.keyWindow
         keyWindow?.addSubview(ActivityIndicatorPlugin.indicator)
         keyWindow?.bringSubviewToFront(ActivityIndicatorPlugin.indicator)
         ActivityIndicatorPlugin.indicator.startAnimating()
     }
     
-    func didReceive<Req: NetworkRequest>(_ request: Req, result: ResultType) {
+    func didReceive<Req: HTTPRequest>(_ request: Req, result: ResultType) {
         ActivityIndicatorPlugin.indicator.stopAnimating()
         if ActivityIndicatorPlugin.indicator.superview != nil {
             ActivityIndicatorPlugin.indicator.removeFromSuperview()

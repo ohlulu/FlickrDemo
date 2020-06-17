@@ -8,14 +8,14 @@
 
 import Foundation
 
-public struct LogDecision: NetworkDecision {
+public struct LogDecision: HTTPDecision {
     
     var startTime: Date?
     var endTime: Date?
     
     fileprivate static let formatter = DateFormatter()
     
-    public func shouldApply<Req: NetworkRequest>(
+    public func shouldApply<Req: HTTPRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
@@ -24,7 +24,7 @@ public struct LogDecision: NetworkDecision {
         true
     }
     
-    public func apply<Req: NetworkRequest>(
+    public func apply<Req: HTTPRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,

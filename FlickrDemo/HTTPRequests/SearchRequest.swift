@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchRequest: NetworkRequest {
+struct SearchRequest: HTTPRequest {
     
     var tag: String { "👉 flickr.photos.search"}
     var text = ""
@@ -50,12 +50,7 @@ struct SearchResponse: Codable {
             let isfriend: Int
             let isfamily: Int
             let ispublic: Int
-            
-            enum Size: String {
-                case small = "m"
-                case origin = "o"
-            }
-            
+
             var imageURL: URL? {
                 URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg")
             }

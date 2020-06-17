@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-enum NetworkError: Error {
+enum HTTPError: Error {
     
     enum MultipartFormdata: Error {
         case canNotAsData

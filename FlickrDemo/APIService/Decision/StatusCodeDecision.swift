@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct StatusCodeDecision: NetworkDecision {
+public struct StatusCodeDecision: HTTPDecision {
 
-    public func shouldApply<Req: NetworkRequest>(
+    public func shouldApply<Req: HTTPRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse
@@ -19,13 +19,13 @@ public struct StatusCodeDecision: NetworkDecision {
         !(200..<300).contains(response.statusCode)
     }
     
-    public func apply<Req: NetworkRequest>(
+    public func apply<Req: HTTPRequest>(
         request: Req,
         data: Data,
         response: HTTPURLResponse,
         action: @escaping (DecisionAction<Req>) -> Void
     ) {
         
-        action(.errored(NetworkError.Response.statusCode(code: response.statusCode, body: data)))
+        action(.errored(HTTPError.Response.statusCode(code: response.statusCode, body: data)))
     }
 }
