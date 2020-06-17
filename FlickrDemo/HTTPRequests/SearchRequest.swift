@@ -40,6 +40,7 @@ struct SearchResponse: Codable {
     struct Photos: Codable {
         let perpage: Int
         let pages: Int
+        let total: String
         struct Photo: Codable {
             let owner: String
             let secret: String

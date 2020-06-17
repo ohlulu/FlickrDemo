@@ -45,6 +45,9 @@ extension ResultViewModel: LoadNextable {
                 if model.stat != "ok" {
                     self.failureRelay.accept("state is \(model.stat)")
                     return
+                } else if model.photos.total == "0" {
+                    self.failureRelay.accept("No result.")
+                    return
                 }
                 
                 success(model.photos.photo)
@@ -78,7 +81,6 @@ extension ResultViewModel {
             switch result {
             case .success(let model):
                 NotificationCenter.default.post(model)
-                break
             case .failure(let error):
                 self?.failureRelay.accept(error.localizedDescription)
             }
