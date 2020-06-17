@@ -10,6 +10,7 @@ import UIKit
 
 @_exported import RxSwift
 @_exported import RxCocoa
+import SnapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let tabbar = TabbarViewController()
+        window!.rootViewController = tabbar
+        window!.makeKeyAndVisible()
         return true
     }
 
