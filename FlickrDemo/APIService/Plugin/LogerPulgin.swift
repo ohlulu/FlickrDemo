@@ -1,35 +1,26 @@
 //
-//  LogDecition.swift
-//  NetworkDemo
+//  LogerPulgin.swift
+//  FlickrDemo
 //
-//  Created by Ohlulu on 2020/6/5.
+//  Created by Ohlulu on 2020/6/17.
 //  Copyright © 2020 ohlulu. All rights reserved.
 //
 
 import Foundation
 
-public struct LogDecision: NetworkDecision {
+class LoggerPlugin: HTTPPlugin {
     
     var startTime: Date?
     var endTime: Date?
     
     fileprivate static let formatter = DateFormatter()
     
-    public func shouldApply<Req: NetworkRequest>(
-        request: Req,
-        data: Data,
-        response: HTTPURLResponse
-    ) -> Bool {
-        
-        true
+    func willSend<Req>(_ request: Req) where Req : NetworkRequest {
+        startTime = Date()
     }
     
-    public func apply<Req: NetworkRequest>(
-        request: Req,
-        data: Data,
-        response: HTTPURLResponse,
-        action: @escaping (DecisionAction<Req>) -> Void
-    ) {
+    func didReceive<Req>(_ request: Req, result: LoggerPlugin.ResultType) where Req : NetworkRequest {
+        endTime = Date()
         
         let costTime: TimeInterval
         if let startTime = startTime, let endTime = endTime {
@@ -46,12 +37,11 @@ public struct LogDecision: NetworkDecision {
         cost time -> \(String(format: "%.3f", costTime)) s
         headers -> \(request.urlRequest?.allHTTPHeaderFields ?? [:])
         Request Body -> \(jsonString(data: request.urlRequest?.httpBody))
-        Response Body -> \(jsonString(data: data))
+        Response Body -> \(jsonString(data: result.0))
         ----------------------------------------------------------------------
         """
         
         print(log)
-        action(.next(request, data, response))
     }
     
     private func jsonString(data: Data?) -> String {
@@ -62,5 +52,15 @@ public struct LogDecision: NetworkDecision {
                 return "nil"
         }
         return string.replacingOccurrences(of: "\\", with: "")
+    }
+
+}
+
+
+private extension Date {
+    func toString() -> String {
+        let formatter = LoggerPlugin.formatter
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        return formatter.string(from: self)
     }
 }

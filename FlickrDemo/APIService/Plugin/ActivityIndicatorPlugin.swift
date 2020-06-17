@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ActivityIndicatorPlugin: HTTPPlugin {
+final class ActivityIndicatorPlugin: HTTPPlugin {
     
     static private let indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()

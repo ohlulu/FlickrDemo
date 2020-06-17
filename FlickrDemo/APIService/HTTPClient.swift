@@ -30,15 +30,6 @@ public struct HTTPClient {
         handler: @escaping (Result<Req.Response, Error>) -> Void
     ) -> CancelToken {
         
-        var _decisions = decisions ?? request.decisions
-        if !_decisions.isEmpty {
-            if var first = _decisions[0] as? LogDecision {
-                first.startTime = Date()
-                _decisions.removeFirst()
-                _decisions.insert(first, at: 0)
-            }
-        }
-        
         let plugins = plugins ?? request.plugins
         
         plugins.forEach { $0.willSend(request) }
@@ -66,7 +57,7 @@ public struct HTTPClient {
                 request: request,
                 data: data,
                 response: httpResponse,
-                decisions: _decisions,
+                decisions: decisions ?? request.decisions,
                 plugins: plugins,
                 handler: handler
             )
@@ -146,12 +137,7 @@ public struct HTTPClient {
         }
         
         var decisions = decisions
-        var currentDecision = decisions.removeFirst()
-        
-        if var _currentDecision = currentDecision as? LogDecision {
-            _currentDecision.endTime = Date()
-            currentDecision = _currentDecision
-        }
+        let currentDecision = decisions.removeFirst()
         
         if !currentDecision.shouldApply(request: request, data: data, response: response) {
             handleDecision(request: request, data: data, response: response, decisions: decisions, plugins: plugins, handler: handler)

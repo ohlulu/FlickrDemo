@@ -77,7 +77,6 @@ public extension NetworkRequest {
     
     var defaultDecisions: [NetworkDecision] {
         [
-            LogDecision(),
             StatusCodeDecision(),
             DecodeDecision(),
             DoneDecision()
@@ -88,6 +87,7 @@ public extension NetworkRequest {
     
     var defaultPlugins: [HTTPPlugin] {
         [
+            LoggerPlugin(),
             ActivityIndicatorPlugin()
         ]
     }
