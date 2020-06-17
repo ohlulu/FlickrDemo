@@ -1,8 +1,8 @@
 //
-//  ResultViewController.swift
+//  FavoritesViewController.swift
 //  FlickrDemo
 //
-//  Created by Ohlulu on 2020/6/15.
+//  Created by Ohlulu on 2020/6/16.
 //  Copyright © 2020 ohlulu. All rights reserved.
 //
 
@@ -10,15 +10,15 @@ import UIKit
 import SwiftUI
 
 @available(iOS 13.0, *)
-struct ResultViewController_Preview: PreviewProvider {
-    static var vc: ResultViewController = ResultViewController()
+struct FavoritesViewController_Preview: PreviewProvider {
+    static var vc: FavoritesViewController = FavoritesViewController()
     static var previews: some SwiftUI.View {
         vc.previewGroups()
     }
 }
 
-final class ResultViewController: BaseViewController {
-    
+final class FavoritesViewController: BaseViewController {
+
     private struct Constant {
         let isnet: CGFloat = 10
         let minimumInteritemSpacing: CGFloat = 10
@@ -51,10 +51,10 @@ final class ResultViewController: BaseViewController {
 
     // property
     private let layoutConst = Constant()
-    private let viewModel: ResultViewModel
+    private let viewModel: FavoritesViewModel
 
     // Life cycle
-    init(viewModel: ResultViewModel = ResultViewModel(text: "", perPage: "")) {
+    init(viewModel: FavoritesViewModel = FavoritesViewModel()) {
         self.viewModel = viewModel
         super.init()
     }
@@ -64,8 +64,7 @@ final class ResultViewController: BaseViewController {
         setupUI()
         actionStream()
         observerStream()
-        
-        viewModel.loadNext()
+        viewModel.viewDidLoad()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -73,51 +72,15 @@ final class ResultViewController: BaseViewController {
     }
 }
 
-// MARK: - Action Stream
-
-private extension ResultViewController {
-    
-    func actionStream() {
-        
-    }
-}
-
-// MARK: - Observer Stream
-
-private extension ResultViewController {
-    
-    func observerStream() {
-        viewModel.failure
-            .map { ("Oops!", $0) }
-            .bind(to: failureBinder)
-            .disposed(by: bag)
-        
-        viewModel.reload
-            .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.collectionView.reloadData()
-            }).disposed(by: bag)
-    }
-}
-
 // MARK: - UICollectionViewDelegate
 
-extension ResultViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if viewModel.numberOfItemsInSection - 1 == indexPath.row {
-            viewModel.loadNext()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelectItem(at: indexPath)
-    }
+extension FavoritesViewController: UICollectionViewDelegate {
+
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension ResultViewController: UICollectionViewDataSource {
+extension FavoritesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfItemsInSection
@@ -131,26 +94,43 @@ extension ResultViewController: UICollectionViewDataSource {
     }
 }
 
+
+
+// MARK: - Action Stream
+
+private extension FavoritesViewController {
+    
+    func actionStream() {
+        
+    }
+}
+
+// MARK: - Observer Stream
+
+private extension FavoritesViewController {
+    
+    func observerStream() {
+        viewModel.reload
+            .drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }).disposed(by: bag)
+    }
+}
+
 // MARK: - Helper
 
-private extension ResultViewController {
-    
-    var failureBinder: Binder<(String?, String?)> {
-        Binder(self) { target, value in
-            target.showAlert(title: value.0, message: value.1, handler: { _ in
-                target.navigationController?.popViewController(animated: true)
-            })
-        }
-    }
+private extension FavoritesViewController {
+
 }
 
 // MARK: - Setup UI methods
 
-private extension ResultViewController {
+private extension FavoritesViewController {
 
     func setupUI() {
 
-        navigationItem.title = "Result"
+        navigationItem.title = "Favorites"
         
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { (make) in

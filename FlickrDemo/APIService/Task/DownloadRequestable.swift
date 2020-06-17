@@ -14,12 +14,21 @@ struct BaseDownloadResponseModel: Decodable {
     let fileURL: URL
 }
 
-protocol DownloadRequestable: NetworkRequest where Response == BaseDownloadResponseModel {
+protocol DownloadRequestable: NetworkRequest {
 
     var destination: DownloadDestination { get }
+}
+
+extension DownloadRequestable {
+    var responseModel: Response? {
+        fatalError("implement it.")
+    }
 }
 
 extension DownloadRequestable {
     
     var task: Task { .download(destination) }
 }
+
+extension BaseDownloadResponseModel: Notificationable { }
+

@@ -12,12 +12,8 @@ struct ActivityIndicatorPlugin: HTTPPlugin {
     
     static private let indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
-        indicator.style = .gray
-        indicator.layer.shadowColor = UIColor.black.cgColor
-        indicator.layer.shadowRadius = 4
-        indicator.layer.shadowOffset = .init(width: 2, height: 2)
-        indicator.layer.shadowOpacity = 0.6
-        indicator.backgroundColor = .white
+        indicator.color = .red
+        indicator.transform = .init(scaleX: 3, y: 3)
         let bounds = UIScreen.main.bounds
         indicator.center = .init(x: bounds.midX, y: bounds.midY)
         return indicator

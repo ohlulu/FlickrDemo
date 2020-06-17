@@ -57,7 +57,7 @@ public extension NetworkRequest {
     var headers: [String: String]? { nil }
     
     // 固定的Header
-    var defaultHeaders: [String: String]? { ["device": "iOS"] }
+    var defaultHeaders: [String: String]? { nil }
     
     // 可以改成專案中常用的
     var task: Task { .normal }

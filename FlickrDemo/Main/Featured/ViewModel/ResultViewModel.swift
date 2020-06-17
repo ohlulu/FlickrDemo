@@ -69,17 +69,18 @@ extension ResultViewModel {
         let data = dataSource[indexPath.row]
         
         guard let url = data.imageURL else {
-            failureRelay.accept("url id nil.")
+            failureRelay.accept("url is nil.")
             return
         }
         
         let request = DownloadImageRequest(url: url, title: data.title)
-        Client.send(request) { result in
+        Client.send(request) { [weak self] result in
             switch result {
             case .success(let model):
+                NotificationCenter.default.post(model)
                 break
             case .failure(let error):
-                break
+                self?.failureRelay.accept(error.localizedDescription)
             }
         }
     }

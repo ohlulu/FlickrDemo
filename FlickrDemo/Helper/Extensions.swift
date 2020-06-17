@@ -22,6 +22,29 @@ extension UIApplication {
 }
 
 
+extension String {
+    
+    func base64Encoded(encoding: String.Encoding = .utf8) -> String? {
+        let plainData = data(using: encoding)
+        return plainData?.base64EncodedString()
+    }
+    
+    func base64Decoded(decoding: String.Encoding = .utf8,
+                       options: Data.Base64DecodingOptions = .ignoreUnknownCharacters) -> String? {
+        let remainder = count % 4
+
+        var padding = ""
+        if remainder > 0 {
+            padding = String(repeating: "=", count: 4 - remainder)
+        }
+
+        guard let data = Data(base64Encoded: self + padding,
+                              options: options) else { return nil }
+
+        return String(data: data, encoding: decoding)
+    }
+}
+
 extension Date {
     
     func toString(format: String = "yyyyMMddHHmmss") -> String {

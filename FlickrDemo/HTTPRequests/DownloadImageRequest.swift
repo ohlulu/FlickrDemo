@@ -13,6 +13,7 @@ struct DownloadImageRequest: DownloadRequestable {
     let destination: DownloadDestination
     var tag: String { "👉 download image"}
     var baseURL: URL
+    var responseModel: BaseDownloadResponseModel?
     
     init(url: URL, title: String) {
         
@@ -22,11 +23,9 @@ struct DownloadImageRequest: DownloadRequestable {
         destination = {  _, _ in
             let manager = FileManager.default
             let documentsURL = manager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            var fileURL = documentsURL.appendingPathComponent("\(title).jpg")
-            if manager.fileExists(atPath: fileURL.path) {
-                fileURL = documentsURL.appendingPathComponent("\(title)_\(Date().toString()).jpg")
-            }
-            return (fileURL, [.createIntermediateDirectories])
+            let fileName = title.base64Encoded() ?? UUID().uuidString
+            let fileURL = documentsURL.appendingPathComponent("\(fileName).jpg")
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
         }
     }
 }

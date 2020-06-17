@@ -43,7 +43,7 @@ private extension TabbarViewController {
     func setupUI() {
         viewControllers = [
             initialTab(vc: FeaturedViewController(), item: .featured, tag: 0),
-            initialTab(vc: BaseViewController(), item: .favorites, tag: 1),
+            initialTab(vc: FavoritesViewController(), item: .favorites, tag: 1),
         ]
     }
     
