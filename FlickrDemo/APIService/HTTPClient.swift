@@ -11,7 +11,7 @@ import Alamofire
 
 let Client = HTTPClient.default
 
-public struct HTTPClient {
+public class HTTPClient {
     
     static let `default` = HTTPClient()
     

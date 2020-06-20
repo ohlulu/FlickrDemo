@@ -107,7 +107,11 @@ private extension FeaturedViewController {
                 guard let self = self else { return }
                 switch result {
                 case .success(let model):
-                    let vm = ResultViewModel(text: model.0, perPage: model.1)
+                    let remotRepository = RemoteImageRepository(
+                        client: HTTPClient.default,
+                        text: model.0,
+                        perPage: model.1)
+                    let vm = ResultViewModel(repository: remotRepository)
                     let vc = ResultViewController(viewModel: vm)
                     self.navigationController?.pushViewController(vc, animated: true)
                 case .failure(let error) :
