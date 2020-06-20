@@ -11,8 +11,12 @@ import Kingfisher
 
 protocol ResultCellModelProtocol {
     var title: String { get }
-//    var imageURL: URL? { get }
+    var imageURL: URL? { get }
     var imageConfigurator: ((UIImageView) -> Void)? { get }
+}
+
+extension ResultCellModelProtocol {
+    var imageURL: URL? { nil }
 }
     
 final class Cell: UICollectionViewCell {

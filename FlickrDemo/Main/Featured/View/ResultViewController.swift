@@ -54,8 +54,15 @@ final class ResultViewController: BaseViewController {
     private let viewModel: ResultViewModel
 
     // Life cycle
-    init(viewModel: ResultViewModel = ResultViewModel(text: "", perPage: "")) {
-        self.viewModel = viewModel
+    init(viewModel: ResultViewModel? = nil) {
+        if let viewModel = viewModel {
+            self.viewModel = viewModel
+        } else {
+            let localRepository = LocalImageRepository()
+            let vm = ResultViewModel(repository: localRepository)
+            self.viewModel = vm
+        }
+        
         super.init()
     }
     

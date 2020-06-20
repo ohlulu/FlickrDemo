@@ -32,6 +32,7 @@ struct SearchRequest: HTTPRequest {
             QueryItemAdapter(parameters: parameters)
         ]
     }
+    
     var responseModel: SearchResponse?
 }
 

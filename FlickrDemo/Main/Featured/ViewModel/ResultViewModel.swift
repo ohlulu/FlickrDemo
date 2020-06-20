@@ -19,14 +19,15 @@ final class ResultViewModel: BaseViewModel {
     var reload: Driver<Void> { reloadRelay.asDriver(onErrorJustReturn: ()) }
     
     var nextPageStatus: NextPageStatus = NextPageStatus()
-    var dataSource = [SearchResponse.Photos.Photo]()//(0...10).map { _ in "" }
+    var dataSource = [ResultCellModelProtocol]()//(0...10).map { _ in "" }
     
-    private var request = SearchRequest()
+//    private var request = SearchRequest()
 
+    private let repository: ImageRepository
     // life cycle
-    init(text: String, perPage: String) {
-        request.perPage = perPage
-        request.text = text
+    init(repository: ImageRepository) {
+        self.repository = repository
+
         super.init()
     }
 }
@@ -35,27 +36,20 @@ final class ResultViewModel: BaseViewModel {
 
 extension ResultViewModel: LoadNextable {
     
-    func performLoad(lastIndex: Int, success: @escaping (_ model: [SearchResponse.Photos.Photo]) -> Void) {
+    func performLoad(lastIndex: Int, success: @escaping (_ model: [ResultCellModelProtocol]) -> Void) {
+        
         let nextIndex = lastIndex + 1
-        request.index = "\(nextIndex)"
-        Client.send(request) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let model):
-                if model.stat != "ok" {
-                    self.failureRelay.accept("state is \(model.stat)")
-                    return
-                } else if model.photos.total == "0" {
-                    self.failureRelay.accept("No result.")
-                    return
+        nextPageStatus.lastIndex = nextIndex
+        _ = repository.fetchImageList(index: "\(nextIndex)")
+            .subscribe(onSuccess: { [weak self] result in
+                if !result.isEmpty {
+                    success(result as! [SearchResponse.Photos.Photo])
+                } else {
+                    self?.failureRelay.accept("No result.")
                 }
-                
-                success(model.photos.photo)
-                
-            case .failure(let error):
+            }, onError: { error in
                 self.failureRelay.accept("\(error)")
-            }
-        }
+            })
     }
     
     func reloadData() {
