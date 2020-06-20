@@ -19,9 +19,7 @@ final class ResultViewModel: BaseViewModel {
     var reload: Driver<Void> { reloadRelay.asDriver(onErrorJustReturn: ()) }
     
     var nextPageStatus: NextPageStatus = NextPageStatus()
-    var dataSource = [ResultCellModelProtocol]()//(0...10).map { _ in "" }
-    
-//    private var request = SearchRequest()
+    var dataSource = [ResultCellModelProtocol]()
 
     private let repository: ImageRepository
     // life cycle
