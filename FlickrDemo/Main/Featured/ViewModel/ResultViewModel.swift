@@ -43,7 +43,7 @@ extension ResultViewModel: LoadNextable {
         _ = repository.fetchImageList(index: "\(nextIndex)")
             .subscribe(onSuccess: { [weak self] result in
                 if !result.isEmpty {
-                    success(result as! [SearchResponse.Photos.Photo])
+                    success(result)
                 } else {
                     self?.failureRelay.accept("No result.")
                 }
