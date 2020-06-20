@@ -7,6 +7,29 @@
 //
 
 import Foundation
+import Kingfisher
+
+struct FavoriteModel: ResultCellModelProtocol {
+    let title: String
+    let fileURL: URL?
+    var imageConfigurator: ((UIImageView) -> DownloadTask?)?
+    
+    init(url: URL) {
+        if let title = url.pathComponents.last?.replacingOccurrences(of: ".jpg", with: "") {
+            self.title = title.base64Decoded() ?? "Base64 decoded failure."
+        } else {
+            self.title = "unknown"
+        }
+        
+        self.fileURL = url
+        
+        self.imageConfigurator = { imageView in
+            imageView.image = UIImage(contentsOfFile: url.path)
+            return nil
+        }
+    }
+}
+
 
 protocol ImageRepository: class {
     func fetchImageList(index: String) -> Single<[ResultCellModelProtocol]>

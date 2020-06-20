@@ -1,5 +1,5 @@
 //
-//  ResultViewController.swift
+//  ImageListViewController.swift
 //  FlickrDemo
 //
 //  Created by Ohlulu on 2020/6/15.
@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-final class ResultViewController: BaseViewController {
+final class ImageListViewController: BaseViewController {
     
     private struct Constant {
         let isnet: CGFloat = 10
@@ -67,7 +67,7 @@ final class ResultViewController: BaseViewController {
 
 // MARK: - Action Stream
 
-private extension ResultViewController {
+private extension ImageListViewController {
     
     func actionStream() {
         
@@ -76,7 +76,7 @@ private extension ResultViewController {
 
 // MARK: - Observer Stream
 
-private extension ResultViewController {
+private extension ImageListViewController {
     
     func observerStream() {
         viewModel.failure
@@ -94,7 +94,7 @@ private extension ResultViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension ResultViewController: UICollectionViewDelegate {
+extension ImageListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if viewModel.numberOfItemsInSection - 1 == indexPath.row {
@@ -109,7 +109,7 @@ extension ResultViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDataSource
 
-extension ResultViewController: UICollectionViewDataSource {
+extension ImageListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfItemsInSection
@@ -125,7 +125,7 @@ extension ResultViewController: UICollectionViewDataSource {
 
 // MARK: - Helper
 
-private extension ResultViewController {
+private extension ImageListViewController {
     
     var failureBinder: Binder<(String?, String?)> {
         Binder(self) { target, value in
@@ -138,7 +138,7 @@ private extension ResultViewController {
 
 // MARK: - Setup UI methods
 
-private extension ResultViewController {
+private extension ImageListViewController {
 
     func setupUI() {
 

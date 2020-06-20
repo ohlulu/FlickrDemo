@@ -43,7 +43,7 @@ private extension TabbarViewController {
     func setupUI() {
         
         let favoritesVM = FavoritesViewModel(repository: LocalImageRepository())
-        let favoritesVC = initialTab(vc: ResultViewController(viewModel: favoritesVM), item: .favorites, tag: 1)
+        let favoritesVC = initialTab(vc: ImageListViewController(viewModel: favoritesVM), item: .favorites, tag: 1)
         viewControllers = [
             initialTab(vc: FeaturedViewController(), item: .featured, tag: 0),
             favoritesVC

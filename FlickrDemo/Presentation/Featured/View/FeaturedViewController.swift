@@ -7,15 +7,6 @@
 //
 
 import UIKit
-import SwiftUI
-
-@available(iOS 13.0, *)
-struct FeaturedViewController_Preview: PreviewProvider {
-    static var vc: FeaturedViewController = FeaturedViewController()
-    static var previews: some SwiftUI.View {
-        vc.previewGroups()
-    }
-}
 
 final class FeaturedViewController: BaseViewController {
 
@@ -112,7 +103,7 @@ private extension FeaturedViewController {
                         text: model.0,
                         perPage: model.1)
                     let vm = ResultViewModel(repository: remotRepository)
-                    let vc = ResultViewController(viewModel: vm)
+                    let vc = ImageListViewController(viewModel: vm)
                     self.navigationController?.pushViewController(vc, animated: true)
                 case .failure(let error) :
                     self.showAlert(title: "Oops!", message: error.localizedDescription, handler: nil)

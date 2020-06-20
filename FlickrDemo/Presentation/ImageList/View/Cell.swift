@@ -8,16 +8,6 @@
 
 import UIKit
 import Kingfisher
-
-protocol ResultCellModelProtocol {
-    var title: String { get }
-    var imageURL: URL? { get }
-    var imageConfigurator: ((UIImageView) -> Void)? { get }
-}
-
-extension ResultCellModelProtocol {
-    var imageURL: URL? { nil }
-}
     
 final class Cell: UICollectionViewCell {
     
@@ -58,9 +48,6 @@ final class Cell: UICollectionViewCell {
 extension Cell {
     
     func configCell(_ model: ResultCellModelProtocol) {
-//        let image = UIImage(contentsOfFile: model.imageURL!.path)
-//        imageView.image = image
-//        task = imageView.kf.setImage(with: model.imageURL, options: [.transition(.fade(0.2))])
         model.imageConfigurator?(imageView)
         titleLabel.text = model.title
     }
