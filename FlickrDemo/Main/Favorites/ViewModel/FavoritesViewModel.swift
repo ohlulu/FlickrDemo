@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FavoritesViewModel: BaseViewModel, ImageListViewModel2 {
+class FavoritesViewModel: BaseViewModel, ImageListViewModel {
 
     // Stream
     let failureRelay = PublishRelay<String>()

@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ResultViewModel: BaseViewModel, ImageListViewModel2 {
+class ResultViewModel: BaseViewModel, ImageListViewModel {
 
     // Stream
     let failureRelay = PublishRelay<String>()

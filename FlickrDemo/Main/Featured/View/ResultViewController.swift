@@ -43,10 +43,10 @@ final class ResultViewController: BaseViewController {
 
     // property
     private let layoutConst = Constant()
-    private let viewModel: ImageListViewModel2
+    private let viewModel: ImageListViewModel
 
     // Life cycle
-    init(viewModel: ImageListViewModel2) {
+    init(viewModel: ImageListViewModel) {
         self.viewModel = viewModel
         super.init()
     }

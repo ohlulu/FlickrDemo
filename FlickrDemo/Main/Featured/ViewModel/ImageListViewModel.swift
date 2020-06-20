@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ImageListViewModel2: class {
+protocol ImageListViewModel: class {
     
     // Stream
     var failureRelay: PublishRelay<String> { get }
@@ -27,13 +27,13 @@ protocol ImageListViewModel2: class {
     func loadData()
 }
 
-extension ImageListViewModel2 {
+extension ImageListViewModel {
     
     var failure: Observable<String> { failureRelay.asObservable() }
     var reload: Driver<Void> { reloadRelay.asDriver(onErrorJustReturn: ()) }
 }
 
-extension ImageListViewModel2 {
+extension ImageListViewModel {
     
     var numberOfItemsInSection: Int { dataSource.count }
     
@@ -43,7 +43,7 @@ extension ImageListViewModel2 {
 }
 
 // for Remote
-extension ImageListViewModel2 {
+extension ImageListViewModel {
     
     func loadData() { }
     func didSelectItem(at indexPath: IndexPath) { }
