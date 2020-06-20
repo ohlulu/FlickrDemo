@@ -9,14 +9,6 @@
 import UIKit
 import SwiftUI
 
-@available(iOS 13.0, *)
-struct FavoritesViewController_Preview: PreviewProvider {
-    static var vc: FavoritesViewController = FavoritesViewController()
-    static var previews: some SwiftUI.View {
-        vc.previewGroups()
-    }
-}
-
 final class FavoritesViewController: BaseViewController {
 
     private struct Constant {
@@ -51,10 +43,10 @@ final class FavoritesViewController: BaseViewController {
 
     // property
     private let layoutConst = Constant()
-    private let viewModel: FavoritesViewModel
+    private let viewModel: ImageListViewModel2
 
     // Life cycle
-    init(viewModel: FavoritesViewModel = FavoritesViewModel()) {
+    init(viewModel: ImageListViewModel2) {
         self.viewModel = viewModel
         super.init()
     }
@@ -64,7 +56,7 @@ final class FavoritesViewController: BaseViewController {
         setupUI()
         actionStream()
         observerStream()
-        viewModel.viewDidLoad()
+        viewModel.loadData()
     }
 
     required init?(coder aDecoder: NSCoder) {

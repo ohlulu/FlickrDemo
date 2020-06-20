@@ -8,18 +8,19 @@
 
 import Foundation
 
-final class FavoritesViewModel: BaseViewModel {
+class FavoritesViewModel: BaseViewModel, ImageListViewModel2 {
 
     // Stream
-    private let reloadRelay = PublishRelay<Void>()
+    let failureRelay = PublishRelay<String>()
+    let reloadRelay = PublishRelay<Void>()
     
     // Property
-    var reload: Driver<Void> { reloadRelay.asDriver(onErrorJustReturn: ()) }
+    var dataSource = [ResultCellModelProtocol]()
+    let repository: LocalImageRepository
     
-    var dataSource = [FavoriteModel]()
-
     // life cycle
-    override init() {
+    init(repository: LocalImageRepository) {
+        self.repository = repository
         super.init()
         
         NotificationCenter.default.addObserver(BaseDownloadResponseModel.self) { [weak self] noti in
@@ -36,34 +37,11 @@ final class FavoritesViewModel: BaseViewModel {
 extension FavoritesViewModel {
     
     func viewDidLoad() {
-        let manager = FileManager.default
-        let documentsURL = manager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        guard let fileURLs = try? manager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
-            return
-        }
-        dataSource = fileURLs
-            .filter { $0.pathExtension == "jpg" }
-            .map { FavoriteModel(url: $0) }
-        reloadRelay.accept(())
-    }
-}
-
-// MARK: - Output
-
-extension FavoritesViewModel {
-    
-    var numberOfItemsInSection: Int { dataSource.count }
-    
-    func model(at indexPath: IndexPath) -> ResultCellModelProtocol {
-        dataSource[indexPath.row]
-    }
-}
-
-// MARK: - Helper
-
-private extension FavoritesViewModel {
-
-    func featchData() {
-
+        _ = repository.fetchImageList()
+            .subscribe(onSuccess: { [weak self] model in
+                guard let self = self else { return }
+                self.dataSource = model
+                self.reloadRelay.accept(())
+            })
     }
 }

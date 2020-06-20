@@ -9,14 +9,6 @@
 import UIKit
 import SwiftUI
 
-@available(iOS 13.0, *)
-struct ResultViewController_Preview: PreviewProvider {
-    static var vc: ResultViewController = ResultViewController()
-    static var previews: some SwiftUI.View {
-        vc.previewGroups()
-    }
-}
-
 final class ResultViewController: BaseViewController {
     
     private struct Constant {
@@ -51,18 +43,11 @@ final class ResultViewController: BaseViewController {
 
     // property
     private let layoutConst = Constant()
-    private let viewModel: ResultViewModel
+    private let viewModel: ImageListViewModel2
 
     // Life cycle
-    init(viewModel: ResultViewModel? = nil) {
-        if let viewModel = viewModel {
-            self.viewModel = viewModel
-        } else {
-            let localRepository = LocalImageRepository()
-            let vm = ResultViewModel(repository: localRepository)
-            self.viewModel = vm
-        }
-        
+    init(viewModel: ImageListViewModel2) {
+        self.viewModel = viewModel
         super.init()
     }
     
@@ -72,7 +57,7 @@ final class ResultViewController: BaseViewController {
         actionStream()
         observerStream()
         
-        viewModel.loadNext()
+        viewModel.viewDidLoad()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -113,7 +98,7 @@ extension ResultViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if viewModel.numberOfItemsInSection - 1 == indexPath.row {
-            viewModel.loadNext()
+            viewModel.loadData()
         }
     }
     

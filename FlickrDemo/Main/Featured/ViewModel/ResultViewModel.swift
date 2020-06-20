@@ -8,15 +8,14 @@
 
 import Foundation
 
-final class ResultViewModel: BaseViewModel {
+
+class ResultViewModel: BaseViewModel, ImageListViewModel2 {
 
     // Stream
-    private let failureRelay = PublishRelay<String>()
-    private let reloadRelay = PublishRelay<Void>()
+    let failureRelay = PublishRelay<String>()
+    let reloadRelay = PublishRelay<Void>()
 
     // Property
-    var failure: Observable<String> { failureRelay.asObservable() }
-    var reload: Driver<Void> { reloadRelay.asDriver(onErrorJustReturn: ()) }
     
     var nextPageStatus: NextPageStatus = NextPageStatus()
     var dataSource = [ResultCellModelProtocol]()
@@ -38,6 +37,7 @@ extension ResultViewModel: LoadNextable {
         
         let nextIndex = lastIndex + 1
         nextPageStatus.lastIndex = nextIndex
+        
         _ = repository.fetchImageList(index: "\(nextIndex)")
             .subscribe(onSuccess: { [weak self] result in
                 if !result.isEmpty {
@@ -58,6 +58,14 @@ extension ResultViewModel: LoadNextable {
 // MARK: - Input
 
 extension ResultViewModel {
+    
+    func viewDidLoad() {
+        loadNext()
+    }
+    
+    func loadData() {
+        loadNext()
+    }
     
     func didSelectItem(at indexPath: IndexPath) {
         
@@ -80,21 +88,4 @@ extension ResultViewModel {
                 self?.failureRelay.accept(error.localizedDescription)
             })
     }
-}
-
-// MARK: - Output
-
-extension ResultViewModel {
-    
-    var numberOfItemsInSection: Int { dataSource.count }
-    
-    func model(at indexPath: IndexPath) -> ResultCellModelProtocol {
-        dataSource[indexPath.row]
-    }
-}
-
-// MARK: - Helper
-
-private extension ResultViewModel {
-
 }

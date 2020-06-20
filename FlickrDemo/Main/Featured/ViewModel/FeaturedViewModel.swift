@@ -79,18 +79,3 @@ extension FeaturedViewModel {
         
     }
 }
-
-// MARK: - Output
-
-extension FeaturedViewModel {
-    
-}
-
-// MARK: - Helper
-
-private extension FeaturedViewModel {
-
-    func featchData() {
-
-    }
-}
