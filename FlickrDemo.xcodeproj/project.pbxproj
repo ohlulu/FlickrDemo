@@ -52,7 +52,7 @@
 		50AB65562498CADC00572375 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB65552498CADC00572375 /* FavoritesViewController.swift */; };
 		50AB65582498CAE700572375 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB65572498CAE700572375 /* FavoritesViewModel.swift */; };
 		50CDE121249DA77100E772E9 /* ImageRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CDE120249DA77100E772E9 /* ImageRepositories.swift */; };
-		50CDE123249DA8EC00E772E9 /* HTTP+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CDE122249DA8EC00E772E9 /* HTTP+Rx.swift */; };
+		50CDE123249DA8EC00E772E9 /* HTTPClient+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CDE122249DA8EC00E772E9 /* HTTPClient+Rx.swift */; };
 		50EC93E22498A8A10014676E /* AlamofireInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EC93E12498A8A10014676E /* AlamofireInterface.swift */; };
 		50EC93E42498B9320014676E /* DownloadRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EC93E32498B9320014676E /* DownloadRequestable.swift */; };
 		50EC93E62498BB130014676E /* DownloadImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EC93E52498BB130014676E /* DownloadImageRequest.swift */; };
@@ -124,7 +124,7 @@
 		50AB65552498CADC00572375 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		50AB65572498CAE700572375 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		50CDE120249DA77100E772E9 /* ImageRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositories.swift; sourceTree = "<group>"; };
-		50CDE122249DA8EC00E772E9 /* HTTP+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTP+Rx.swift"; sourceTree = "<group>"; };
+		50CDE122249DA8EC00E772E9 /* HTTPClient+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPClient+Rx.swift"; sourceTree = "<group>"; };
 		50EC93E12498A8A10014676E /* AlamofireInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireInterface.swift; sourceTree = "<group>"; };
 		50EC93E32498B9320014676E /* DownloadRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRequestable.swift; sourceTree = "<group>"; };
 		50EC93E52498BB130014676E /* DownloadImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImageRequest.swift; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 				50065BF62497B145001DF16F /* HTTPClient.swift */,
 				50065C022497B145001DF16F /* HTTPError.swift */,
 				50EC93E12498A8A10014676E /* AlamofireInterface.swift */,
-				50CDE122249DA8EC00E772E9 /* HTTP+Rx.swift */,
+				50CDE122249DA8EC00E772E9 /* HTTPClient+Rx.swift */,
 				50065BEB2497B145001DF16F /* Plugin */,
 				50065BED2497B145001DF16F /* Adapter */,
 				50065BF72497B145001DF16F /* Task */,
@@ -196,11 +196,11 @@
 		50065BED2497B145001DF16F /* Adapter */ = {
 			isa = PBXGroup;
 			children = (
+				50065BF22497B145001DF16F /* AnyAdapter.swift */,
 				50065BEE2497B145001DF16F /* MethodAdapter.swift */,
 				50065BEF2497B145001DF16F /* JSONAdapter.swift */,
 				50065BF02497B145001DF16F /* HeaderAdapter.swift */,
 				50065BF12497B145001DF16F /* QueryItemAdapter.swift */,
-				50065BF22497B145001DF16F /* AnyAdapter.swift */,
 				50065BF32497B145001DF16F /* RequestAdapter.swift */,
 			);
 			path = Adapter;
@@ -613,7 +613,7 @@
 				5060795C2497A2390005BB14 /* BaseViewController.swift in Sources */,
 				50065C262497C84A001DF16F /* LoadNextable.swift in Sources */,
 				50EC93E62498BB130014676E /* DownloadImageRequest.swift in Sources */,
-				50CDE123249DA8EC00E772E9 /* HTTP+Rx.swift in Sources */,
+				50CDE123249DA8EC00E772E9 /* HTTPClient+Rx.swift in Sources */,
 				50065C132497B145001DF16F /* HTTPDecision.swift in Sources */,
 				50065C292497D409001DF16F /* ResultCellModel.swift in Sources */,
 				50065C112497B145001DF16F /* StatusCodeDecision.swift in Sources */,

@@ -69,14 +69,16 @@ extension ResultViewModel {
         }
         
         let request = DownloadImageRequest(url: url, title: data.title)
-        Client.send(request) { [weak self] result in
-            switch result {
-            case .success(let model):
+        _ = Client.rx.sendWithProgress(request)
+            .subscribe(onNext: { progress, model in
+                guard let model = model else {
+                    print("progress -> \(progress)")
+                    return
+                }
                 NotificationCenter.default.post(model)
-            case .failure(let error):
+            }, onError: { [weak self] error in
                 self?.failureRelay.accept(error.localizedDescription)
-            }
-        }
+            })
     }
 }
 
